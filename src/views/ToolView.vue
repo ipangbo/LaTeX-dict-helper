@@ -60,8 +60,8 @@
 import { ref, nextTick } from "vue";
 import type { InputInst } from "naive-ui";
 
-const word = ref();
-const chinese = ref();
+const word = ref("");
+const chinese = ref("");
 const partOfSpeech = ref();
 const partOfSpeechOptions = ref([
   {
@@ -107,19 +107,22 @@ const partOfSpeechOptions = ref([
     value: "int.",
   },
 ]);
-const enSen = ref();
-const chSen = ref();
+const enSen = ref("");
+const chSen = ref("");
 const res = ref("");
 
 const resultDom = ref<InputInst | null>(null);
 
+const replaceAll = (string: string, search: string, replace: string) => {
+  return string.split(search).join(replace);
+};
+
 const handleResult = () => {
   res.value += `\\entry{${word.value}}{${chinese.value}}{${
     partOfSpeech.value
-  }}{${enSen.value.replace("%", "\\%")} ${chSen.value.replace(
-    "%",
-    "\\%"
-  )}}\n\n`;
+  }}{${enSen.value?.replace("%", "\\%")} ${
+    chSen.value ? replaceAll(chSen.value, "%", "\\%") : ""
+  }}\n\n`;
   clearInput();
 
   nextTick(() => {
@@ -135,9 +138,9 @@ const handleResult = () => {
 const clearInput = () => {
   word.value = "";
   chinese.value = "";
-  partOfSpeech.value = null;
-  enSen.value = null;
-  chSen.value = null;
+  partOfSpeech.value = undefined;
+  enSen.value = "";
+  chSen.value = "";
 };
 </script>
 
