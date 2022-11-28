@@ -147,6 +147,7 @@ const clearInput = () => {
 
 const autoBlurSelect = () => {
   selectInstRef.value?.blur();
+  selectInstRef.value?.focus();
 };
 </script>
 
