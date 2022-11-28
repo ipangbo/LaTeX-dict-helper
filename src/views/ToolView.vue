@@ -114,7 +114,12 @@ const res = ref("");
 const resultDom = ref<InputInst | null>(null);
 
 const handleResult = () => {
-  res.value += `\\entry{${word.value}}{${chinese.value}}{${partOfSpeech.value}}{${enSen.value} ${chSen.value}}\n\n`;
+  res.value += `\\entry{${word.value}}{${chinese.value}}{${
+    partOfSpeech.value
+  }}{${enSen.value.replace("%", "\\%")} ${chSen.value.replace(
+    "%",
+    "\\%"
+  )}}\n\n`;
   clearInput();
 
   nextTick(() => {
