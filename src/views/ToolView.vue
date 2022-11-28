@@ -124,7 +124,7 @@ const replaceAll = (string: string, search: string, replace: string) => {
 const handleResult = () => {
   res.value += `\\entry{${word.value}}{${
     chinese.value
-  }}{${partOfSpeech.value.join(" ")}}{${enSen.value?.replace("%", "\\%")} ${
+  }}{${partOfSpeech.value?.join(" ")}}{${enSen.value?.replace("%", "\\%")} ${
     chSen.value ? replaceAll(chSen.value, "%", "\\%") : ""
   }}\n\n`;
   clearInput();
