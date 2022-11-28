@@ -166,8 +166,6 @@ const autoBlurSelect = () => {
 
 <style scoped lang="scss">
 .n-card {
-  min-width: 300px;
-
   .tag {
     font-weight: 700;
     margin-top: 10px;
