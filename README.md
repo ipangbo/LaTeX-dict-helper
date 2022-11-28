@@ -2,6 +2,8 @@
 
 配合[LaTeX-dict](https://github.com/ipangbo/LaTeX-dict)项目生成词典电子书
 
+![my-dict](https://voidtech.cn/i/2022/11/28/x6etxp.png)
+
 
 ## Project Setup
 
