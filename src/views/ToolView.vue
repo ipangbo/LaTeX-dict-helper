@@ -1,12 +1,12 @@
 <template>
   <n-grid x-gap="22" :cols="2">
     <n-gi>
-      <n-card title="Latex词典生成器">
+      <n-card title="LaTeX词典生成器">
         <h4 class="tag">单词：</h4>
-        <n-input v-model:value="word" type="text" placeholder="" clearable/>
+        <n-input v-model:value="word" type="text" placeholder="" clearable />
 
         <h4 class="tag">中文：</h4>
-        <n-input v-model:value="chinese" type="text" placeholder="" clearable/>
+        <n-input v-model:value="chinese" type="text" placeholder="" clearable />
 
         <h4 class="tag">词性：</h4>
         <n-select
@@ -16,10 +16,20 @@
         />
 
         <h4 class="tag">英文例句：</h4>
-        <n-input v-model:value="enSen" type="textarea" placeholder="" clearable/>
+        <n-input
+          v-model:value="enSen"
+          type="textarea"
+          placeholder=""
+          clearable
+        />
 
         <h4 class="tag">中文例句：</h4>
-        <n-input v-model:value="chSen" type="textarea" placeholder="" clearable/>
+        <n-input
+          v-model:value="chSen"
+          type="textarea"
+          placeholder=""
+          clearable
+        />
 
         <div class="button-box">
           <n-button type="info" @click="handleResult"> 生成结果 </n-button>
@@ -29,7 +39,7 @@
       </n-card>
     </n-gi>
     <n-gi>
-      <n-card title="结果：">
+      <n-card title="结果：" id="result-card">
         <n-input
           v-model:value="res"
           type="textarea"
@@ -47,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 import type { InputInst } from "naive-ui";
 
 const word = ref();
@@ -106,10 +116,15 @@ const resultDom = ref<InputInst | null>(null);
 const handleResult = () => {
   res.value += `\\entry{${word.value}}{${chinese.value}}{${partOfSpeech.value}}{${enSen.value} ${chSen.value}}\n\n`;
   clearInput();
-  resultDom.value?.scrollTo({
-    behavior: "smooth",
-    top: 10000,
+
+  nextTick(() => {
+    resultDom.value?.scrollTo({
+      behavior: "smooth",
+      top: 10000,
+    });
   });
+
+  nextTick(() => {});
 };
 
 const clearInput = () => {
@@ -139,5 +154,9 @@ const clearInput = () => {
     display: flex;
     justify-content: space-around;
   }
+}
+
+#result-card {
+  height: 100%;
 }
 </style>
