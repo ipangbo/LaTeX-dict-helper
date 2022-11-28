@@ -135,8 +135,6 @@ const handleResult = () => {
       top: 10000,
     });
   });
-
-  nextTick(() => {});
 };
 
 const clearInput = () => {
