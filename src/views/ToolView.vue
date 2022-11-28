@@ -12,7 +12,10 @@
         <n-select
           v-model:value="partOfSpeech"
           :options="partOfSpeechOptions"
-          placeholder="选择一个词性"
+          multiple
+          ref="selectInstRef"
+          @update:value="autoBlurSelect"
+          placeholder="选择一个或多个词性"
         />
 
         <h4 class="tag">英文例句：</h4>
@@ -58,7 +61,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick } from "vue";
-import type { InputInst } from "naive-ui";
+import type { InputInst, SelectInst } from "naive-ui";
 
 const word = ref("");
 const chinese = ref("");
@@ -112,15 +115,16 @@ const chSen = ref("");
 const res = ref("");
 
 const resultDom = ref<InputInst | null>(null);
+const selectInstRef = ref<SelectInst | null>(null);
 
 const replaceAll = (string: string, search: string, replace: string) => {
   return string.split(search).join(replace);
 };
 
 const handleResult = () => {
-  res.value += `\\entry{${word.value}}{${chinese.value}}{${
-    partOfSpeech.value
-  }}{${enSen.value?.replace("%", "\\%")} ${
+  res.value += `\\entry{${word.value}}{${
+    chinese.value
+  }}{${partOfSpeech.value.join(" ")}}{${enSen.value?.replace("%", "\\%")} ${
     chSen.value ? replaceAll(chSen.value, "%", "\\%") : ""
   }}\n\n`;
   clearInput();
@@ -138,9 +142,13 @@ const handleResult = () => {
 const clearInput = () => {
   word.value = "";
   chinese.value = "";
-  partOfSpeech.value = undefined;
+  partOfSpeech.value = null;
   enSen.value = "";
   chSen.value = "";
+};
+
+const autoBlurSelect = () => {
+  selectInstRef.value?.blur();
 };
 </script>
 
