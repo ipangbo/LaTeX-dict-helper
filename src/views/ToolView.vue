@@ -3,7 +3,13 @@
     <n-gi>
       <n-card title="LaTeX词典生成器">
         <h4 class="tag">单词：</h4>
-        <n-input v-model:value="word" type="text" placeholder="" clearable />
+        <n-input
+          v-model:value="word"
+          type="text"
+          placeholder=""
+          clearable
+          ref="wordDom"
+        />
 
         <h4 class="tag">中文：</h4>
         <n-input v-model:value="chinese" type="text" placeholder="" clearable />
@@ -60,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from "vue";
+import { ref, nextTick, onMounted } from "vue";
 import type { InputInst, SelectInst } from "naive-ui";
 
 const word = ref("");
@@ -116,6 +122,11 @@ const res = ref("");
 
 const resultDom = ref<InputInst | null>(null);
 const selectInstRef = ref<SelectInst | null>(null);
+const wordDom = ref<SelectInst | null>(null);
+
+onMounted(() => {
+  wordDom.value?.focus();
+});
 
 const replaceAll = (string: string, search: string, replace: string) => {
   return string.split(search).join(replace);
@@ -135,6 +146,8 @@ const handleResult = () => {
       top: 10000,
     });
   });
+  navigator.clipboard.writeText(res.value);
+  wordDom.value?.focus();
 };
 
 const clearInput = () => {
